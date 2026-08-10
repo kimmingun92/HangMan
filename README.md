@@ -20,31 +20,42 @@ C 언어와 [raylib](https://www.raylib.com/) (+ [raygui](https://github.com/ray
 
 ## 프로젝트 구조
 
+`src/`(구현부)와 `include/`(헤더)를 분리한 구조입니다. 각 폴더에는 해당 폴더 파일들을 설명하는 `README.md`가 별도로 있습니다.
+
 ```
 .
-├── main.c              # 화면 흐름, 렌더링, 게임 루프
-├── game.c / game.h      # 게임 상태 관리, 정답 판정, 자동 모드 로직
-├── types.h              # 화면 상태 / 게임 모드 / 난이도 공통 타입
-├── words/
-│   ├── words.c / words.h  # 난이도·카테고리별 단어 카탈로그 관리
-│   ├── animal.h
-│   ├── color.h
-│   ├── food.h
-│   ├── fruit.h
-│   └── tech.h            # 카테고리별 단어 목록
-└── CMakeLists.txt        # 빌드 설정
+├── CMakeLists.txt        # 빌드 설정
+├── include/
+│   ├── README.md
+│   ├── game.h             # GameState 및 game_* 함수 선언
+│   ├── types.h             # ScreenState / GameMode / Difficulty 공통 타입
+│   └── words/
+│       ├── README.md
+│       ├── words.h         # WordList / WordCatalog 타입, words_get_catalog 선언
+│       ├── animal.h
+│       ├── color.h
+│       ├── food.h
+│       ├── fruit.h
+│       └── tech.h          # 카테고리별 단어 데이터
+└── src/
+    ├── README.md
+    ├── main.c              # 화면 흐름, 렌더링, 게임 루프
+    ├── game.c              # 게임 상태 관리, 정답 판정, 자동 모드 로직
+    └── words/
+        ├── README.md
+        └── words.c         # 난이도·카테고리별 단어 카탈로그 조립
 ```
 
 ### 모듈 역할
 
 | 파일 | 역할 |
 | --- | --- |
-| `main.c` | 화면 흐름 관리, 상태 전환 처리, 게임 루프 실행, 렌더링 함수 호출 |
-| `game.c/h` | 게임 상태 관리, 정답 판정 및 오답 처리, 게임 종료 판단, 자동 모드 추측 로직 |
-| `types.h` | 화면 상태, 게임 모드, 난이도 등 공통 자료형 정의 |
-| `words.c/h` | 난이도 및 카테고리별 단어 데이터 관리, 단어 목록 제공 |
-| `animal.h` ~ `tech.h` | 카테고리별 단어 정의 |
-| `CMakeLists.txt` | 프로젝트 빌드 설정 |
+| `src/main.c` | 화면 흐름 관리, 상태 전환 처리, 게임 루프 실행, 렌더링 함수 호출 |
+| `src/game.c` + `include/game.h` | 게임 상태 관리, 정답 판정 및 오답 처리, 게임 종료 판단, 자동 모드 추측 로직 |
+| `include/types.h` | 화면 상태, 게임 모드, 난이도 등 공통 자료형 정의 |
+| `src/words/words.c` + `include/words/words.h` | 난이도 및 카테고리별 단어 데이터 관리, 단어 목록 제공 |
+| `include/words/animal.h` ~ `tech.h` | 카테고리별 단어 정의 |
+| `CMakeLists.txt` | 프로젝트 빌드 설정 (`src/` 소스 컴파일, `include/`를 헤더 경로로 지정) |
 
 ### 화면 흐름
 
