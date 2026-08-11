@@ -12,6 +12,6 @@
 
 ```
 main.c ──▶ game.h, types.h
-game.c ──▶ game.h(자기 자신), words/words.h
+game.c ──▶ game.h, words/words.h
 words/words.c ──▶ words/words.h, animal.h, color.h, food.h, fruit.h, tech.h
 ```
